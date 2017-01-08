@@ -1,6 +1,6 @@
 var Discord = require("discord.js");
 var bot = new Discord.Client();
-calId = 267482898985123840;
+calId = 267482898985123840; //discord #calendar id
 var versionNum = 1.0;
 var eventText = [];
 
@@ -108,7 +108,7 @@ function addARDEvent(auth) {
 	for (j = 0; j < eventText.length; j++){
 	  calendar.events.quickAdd({
 		auth: auth,
-		calendarId: 'ab29nkg5qcpsd876664ou4a76s@group.calendar.google.com',
+		calendarId: '5i97ee31755cdpednf3fc9b3u0@group.calendar.google.com',
 		text: eventText[j]
   }, function(err, response) {
     if (err) {
@@ -128,8 +128,11 @@ function addARDEvent(auth) {
 
 bot.on("message", msg => {
     if (msg.channel.id == calId)  {
-		var msgContent = msg.content.split(" "); // turns content into array of words seperated by (and removing) spaces
+	var numLines = msg.content.split("\n");
+	for (u = 0; u < numLines.length; u++){
+		var msgContent = numLines[u].split(" "); // turns content into array of words seperated by (and removing) spaces
 		var splitKeyDate = msgContent.indexOf("-");
+		console.log(msgContent[0]);
 		for (i = 0; i < splitKeyDate; i++){
 			if (msgContent[i] != "and"){
 				var eventTextDate;
@@ -157,6 +160,7 @@ bot.on("message", msg => {
 			}
 			
 		}
+	}
 		fs.readFile('client_secret.json', function processClientSecrets(err, content) { // this is now outside of the loop because the callback was giving me a headache, and putting this in without it is like putting toombz on DPS- it just doesn't work
 				  if (err) {
 					console.log('Error loading client secret file: ' + err);

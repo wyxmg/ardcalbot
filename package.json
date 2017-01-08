@@ -1,0 +1,11 @@
+{
+  "name": "ardcalbot",
+  "version": "1.0.0",
+  "description": "A Reddit Dystopia's Discord Calendar Bot",
+  "main": "ardcalbot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Blazballs-BleedingHollow (wyxmg)",
+  "license": "MIT"
+}

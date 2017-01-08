@@ -1,1 +1,1 @@
-worker: node ardcalbot.js
+web: node ardcalbot.js

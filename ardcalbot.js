@@ -5,8 +5,8 @@ var versionNum = 1.0;
 var eventText = [];
 
 
-var port_number = server.listen(process.env.PORT || 3000);
-app.listen(port_number);
+//var port_number = server.listen(process.env.PORT || 3000);
+//app.listen(port_number);
 
 //var http = require('http'); 
 //http.createServer(function (req, res) { res.writeHead(200, {'Content-Type': 'text/plain'}); res.send('it is running\n'); }).listen(process.env.PORT || 5000);

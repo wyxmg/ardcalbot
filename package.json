@@ -7,5 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Blazballs-BleedingHollow (wyxmg)",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^11.0.0",
+    "google-auth-library": "^0.10.0",
+    "googleapis": "^16.0.0"
+  }
 }

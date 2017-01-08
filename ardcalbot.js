@@ -105,7 +105,7 @@ function storeToken(token) {
  */
 function addARDEvent(auth) {
   var calendar = google.calendar('v3');
-  console.log(eventText());
+  console.log(eventText);
   calendar.events.quickAdd({
     auth: auth,
     calendarId: 'ab29nkg5qcpsd876664ou4a76s@group.calendar.google.com',

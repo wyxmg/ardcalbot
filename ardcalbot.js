@@ -4,6 +4,11 @@ calId = 267482898985123840;
 var versionNum = 1.0;
 var eventText = "";
 
+
+var http = require('http'); 
+http.createServer(function (req, res) { res.writeHead(200, {'Content-Type': 'text/plain'}); res.send('it is running\n'); }).listen(process.env.PORT || 5000);
+
+
 var fs = require('fs');
 var readline = require('readline');
 var google = require('googleapis');

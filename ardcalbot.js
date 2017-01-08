@@ -134,7 +134,7 @@ function addARDEvent(auth) {
 
 bot.on("message", msg => {
     if ((msg.channel.id == calId) && (msg.author.username.startsWith("B")))  {
-		var msgContent = msg.content.split(" ");
+		var msgContent = msg.content.split(/,| /); //regex turns content into array of words seperated by (and removing) commas and spaces
 		var splitKeyDate = msgContent.indexOf("-");
 		for (i = 0; i < splitKeyDate; i++){
 			if (msgContent[i] != "and"){
@@ -161,7 +161,7 @@ bot.on("message", msg => {
 				
 				eventText = (eventTextDetails + " on " + eventTextDate + " at " + eventTextTime + "for three hours");
 				
-				//msg.channel.sendMessage(eventText);
+				msg.channel.sendMessage(eventText);
 				
 				fs.readFile('client_secret.json', function processClientSecrets(err, content) {
 				  if (err) {

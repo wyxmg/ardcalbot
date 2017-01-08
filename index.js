@@ -2,7 +2,7 @@ var http, director, bot, router, server, port;
 
 http        = require('http');
 director    = require('director');
-bot         = require('ardcalbot.js');
+bot         = require('./ardcalbot.js');
 
 router = new director.http.Router({
   '/' : {

@@ -2,7 +2,7 @@ var Discord = require("discord.js");
 var bot = new Discord.Client();
 calId = 267482898985123840;
 var versionNum = 1.0;
-var eventText = "";
+var eventText = [];
 
 
 var http = require('http'); 
@@ -48,6 +48,8 @@ function authorize(credentials, callback) {
     }
   });
 }
+
+
 
 /**
  * Get and store new token after prompting for user authorization, and then
@@ -105,8 +107,28 @@ function storeToken(token) {
  */
 function addARDEvent(auth) {
   var calendar = google.calendar('v3');
-  console.log(eventText);
-  calendar.events.quickAdd({
+	for (j = 0; j < eventText.length; j++){
+	  calendar.events.quickAdd({
+		auth: auth,
+		calendarId: 'ab29nkg5qcpsd876664ou4a76s@group.calendar.google.com',
+		text: eventText[j]//"Doctors appointment on 1/9 at 2pm PST"
+  }, function(err, response) {
+    if (err) {
+      console.log('The API returned an error: ' + err);
+      return;
+    }
+  });
+}
+    console.log(eventText);
+  
+}
+
+
+
+//--------------------------------------------------------------------------------------------
+
+
+/*calendar.events.quickAdd({
     auth: auth,
     calendarId: 'ab29nkg5qcpsd876664ou4a76s@group.calendar.google.com',
     text: eventText//"Doctors appointment on 1/9 at 2pm PST"
@@ -116,26 +138,15 @@ function addARDEvent(auth) {
       return;
     }
   });
-}
-
-
-
-//--------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
+*/
 
 
 
 
 bot.on("message", msg => {
-    if ((msg.channel.id == calId) && (msg.author.username.startsWith("B")))  {
-		var msgContent = msg.content.split(/,| /); //regex turns content into array of words seperated by (and removing) commas and spaces
+    if (msg.channel.id == calId)  {
+		var msgContent = msg.content.split(" "); // turns content into array of words seperated by (and removing) spaces
+		console.log(msgContent);
 		var splitKeyDate = msgContent.indexOf("-");
 		for (i = 0; i < splitKeyDate; i++){
 			if (msgContent[i] != "and"){
@@ -145,7 +156,7 @@ bot.on("message", msg => {
 				
 				eventTextDate = msgContent[i];
 
-				msg.channel.sendMessage(msgContent[i]);
+				//msg.channel.sendMessage(msgContent[i]);
 				
 				var msgContentDetails = msgContent.slice();
 				msgContentDetails.splice(0, (splitKeyDate+1));
@@ -160,11 +171,14 @@ bot.on("message", msg => {
 				//eventDetails = eventDetails.substring(0, eventDetails.length);
 				eventTextDetails = (eventDetails + ". Link: " + msgContentDetails[msgContentDetails.length - 1]);
 				
-				eventText = (eventTextDetails + " on " + eventTextDate + " at " + eventTextTime + " for three hours");
+				eventText.push(eventTextDetails + " on " + eventTextDate + " at " + eventTextTime + " for three hours");
 				
-				msg.channel.sendMessage(eventText);
+
 				
-				fs.readFile('client_secret.json', function processClientSecrets(err, content) {
+			}
+			
+		}
+		fs.readFile('client_secret.json', function processClientSecrets(err, content) {
 				  if (err) {
 					console.log('Error loading client secret file: ' + err);
 					return;
@@ -173,10 +187,6 @@ bot.on("message", msg => {
 				  // Google Calendar API.
 				  authorize(JSON.parse(content), addARDEvent);
 				});
-				
-			}
-			
-		}
 		
 		
 		

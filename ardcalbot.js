@@ -132,7 +132,6 @@ bot.on("message", msg => {
 	for (u = 0; u < numLines.length; u++){
 		var msgContent = numLines[u].split(" "); // turns content into array of words seperated by (and removing) spaces
 		var splitKeyDate = msgContent.indexOf("-");
-		console.log(msgContent[0]);
 		for (i = 0; i < splitKeyDate; i++){
 			if (msgContent[i] != "and"){
 				var eventTextDate;

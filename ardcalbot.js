@@ -159,7 +159,7 @@ bot.on("message", msg => {
 				//eventDetails = eventDetails.substring(0, eventDetails.length);
 				eventTextDetails = (eventDetails + ". Link: " + msgContentDetails[msgContentDetails.length - 1]);
 				
-				eventText = (eventTextDetails + " on " + eventTextDate + " at " + eventTextTime + "for three hours");
+				eventText = (eventTextDetails + " on " + eventTextDate + " at " + eventTextTime + " for three hours");
 				
 				msg.channel.sendMessage(eventText);
 				

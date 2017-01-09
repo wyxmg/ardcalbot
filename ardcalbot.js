@@ -147,8 +147,7 @@ bot.on("message", msg => {
 				var eventDetails = "";
 				console.log(msgContentDetails);
 				if (msgContentDetails.indexOf("-") < 0){
-					console.log("k");
-					for (p = 2; p < (msgContentDetails.length - 1); p++){
+					for (p = 2; p < (msgContentDetails.length); p++){
 					eventDetails += " ";
 					eventDetails += msgContentDetails[p];
 					}

@@ -152,7 +152,7 @@ bot.on("message", msg => {
 					eventDetails += " ";
 					eventDetails += msgContentDetails[k];
 					}
-					eventLink = "None";
+					eventLink = "N/A";
 					
 				}
 				else{

@@ -150,7 +150,7 @@ bot.on("message", msg => {
 					
 					for (p = 2; p < (msgContentDetails.length - 1); p++){
 					eventDetails += " ";
-					eventDetails += msgContentDetails[k];
+					eventDetails += msgContentDetails[p];
 					}
 					eventLink = "N/A";
 					

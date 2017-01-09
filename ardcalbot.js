@@ -145,9 +145,9 @@ bot.on("message", msg => {
 				eventTextTime = ((msgContentDetails[0]) + " EST");
 				
 				var eventDetails = "";
-				
+				console.log(msgContentDetails);
 				if (msgContentDetails.indexOf("-") < 0){
-					
+					console.log("k");
 					for (p = 2; p < (msgContentDetails.length - 1); p++){
 					eventDetails += " ";
 					eventDetails += msgContentDetails[p];

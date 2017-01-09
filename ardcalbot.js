@@ -162,7 +162,7 @@ bot.on("message", msg => {
 					eventDetails += " ";
 					eventDetails += msgContentDetails[k];
 				}
-					eventLink = msgContentDetails[msgContentDetails.length - 1]);
+					eventLink = msgContentDetails[msgContentDetails.length - 1];
 				}
 				eventTextDetails = (eventDetails + ". Link: " + eventLink);
 				

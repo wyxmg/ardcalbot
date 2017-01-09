@@ -145,12 +145,26 @@ bot.on("message", msg => {
 				eventTextTime = ((msgContentDetails[0]) + " EST");
 				
 				var eventDetails = "";
+				
+				if (msgContentDetails.indexOf("-") < 0){
+					
+					for (p = 2; p < (msgContentDetails.length - 1); p++){
+					eventDetails += " ";
+					eventDetails += msgContentDetails[k];
+					}
+					eventLink = "None";
+					
+				}
+				else{
+					
+					
 				for (k = 2; k < (msgContentDetails.length - 2); k++){
 					eventDetails += " ";
 					eventDetails += msgContentDetails[k];
 				}
-				
-				eventTextDetails = (eventDetails + ". Link: " + msgContentDetails[msgContentDetails.length - 1]);
+					eventLink = msgContentDetails[msgContentDetails.length - 1]);
+				}
+				eventTextDetails = (eventDetails + ". Link: " + eventLink);
 				
 				eventText.push(eventTextDetails + " on " + eventTextDate + " at " + eventTextTime + " for three hours");
 				

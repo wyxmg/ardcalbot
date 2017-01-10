@@ -127,7 +127,7 @@ function addARDEvent(auth) {
 
 
 bot.on("message", msg => {
-    if (msg.channel.id == calId)  {
+    if (msg.channel.id == client.channels.get("name", "calendar").id;)  {
 	var numLines = msg.content.split("\n");
 	for (u = 0; u < numLines.length; u++){
 		var msgContent = numLines[u].split(" "); // turns content into array of words seperated by (and removing) spaces

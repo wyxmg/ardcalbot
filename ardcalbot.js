@@ -1,6 +1,6 @@
 var Discord = require("discord.js");
 var bot = new Discord.Client();
-var versionNum = 1.0;
+var versionNum = 1.1;
 var eventText = [];
 var calChannel = "calendar";
 
@@ -26,7 +26,6 @@ var raidLeaders;
 var raidFile = 'leaderlist.json'
 jsonfile.readFile(raidFile, function(err, obj) {
   raidLeaders = obj;
-  console.log(obj[2]);
 })
 
 
@@ -182,6 +181,7 @@ bot.on("message", msg => {
 			var raidLeader = msg.content.substring(5);
 			raidLeaders.push(raidLeader.toLowerCase());
 			jsonfile.writeFileSync(raidFile, raidLeaders);
+			console.log("Added raid leader " + raidLeader);
 			msg.reply("Added raid leader " + raidLeader);
 		}
 		else if (msg.content.startsWith("!get")){
@@ -201,6 +201,7 @@ bot.on("message", msg => {
 				raidLeaders.splice(raidLeaders.indexOf(raidLeader.toLowerCase()), 1);
 				jsonfile.writeFileSync(raidFile, raidLeaders);
 				msg.reply("Removed raid leader " + raidLeader);
+				console.log("Removed raid leader " + raidLeader);
 			}
 			else{
 				msg.reply("Raid Leader not found: " + raidLeader);

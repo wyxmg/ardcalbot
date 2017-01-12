@@ -132,7 +132,7 @@ function addARDEvent(auth) {
 	for (j = 0; j < eventText.length; j++){
 	  calendar.events.quickAdd({
 		auth: auth,
-		calendarId: '5i97ee31755cdpednf3fc9b3u0@group.calendar.google.com',//'aredditdystopia@gmail.com',
+		calendarId: 'aredditdystopia@gmail.com',//'aredditdystopia@gmail.com',
 		colorId: 'green',
 		text: eventText[j]
   }, function(err, response) {
@@ -152,7 +152,7 @@ function addARDEvent(auth) {
 		console.log(response);
 			calendar.events.update({
 			  auth: auth,
-			  calendarId: '5i97ee31755cdpednf3fc9b3u0@group.calendar.google.com',
+			  calendarId: 'aredditdystopia@gmail.com',
 			  eventId: response.id,
 			  resource: response
 			}, function(err, event) {

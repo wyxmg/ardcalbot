@@ -160,7 +160,7 @@ function addARDEvent(auth) {
 				console.log('There was an error contacting the Calendar service: ' + err);
 				return;
 			  }
-			  console.log('Event update: %s', event.htmlLink);
+			  //console.log('Event update: %s', event.htmlLink);
 			});
 		
 	}

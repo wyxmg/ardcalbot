@@ -149,7 +149,7 @@ function addARDEvent(auth) {
 				console.log("Raid Leader: " + raidLeaders[qu]);
 			}
 		}
-		console.log(response);
+		//console.log(response);
 			calendar.events.update({
 			  auth: auth,
 			  calendarId: 'aredditdystopia@gmail.com',

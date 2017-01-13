@@ -1,12 +1,12 @@
 var Discord = require("discord.js");
 var bot = new Discord.Client();
-calId = 267482898985123840; //discord #calendar id
-var versionNum = 1.0;
+var versionNum = 1.1;
 var eventText = [];
+var calChannel = "calendar";
 
 	
 
-
+var jsonfile = require('jsonfile');
 var fs = require('fs');
 var readline = require('readline');
 var google = require('googleapis');
@@ -18,6 +18,30 @@ var SCOPES = ['https://www.googleapis.com/auth/calendar'];
 var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
     process.env.USERPROFILE) + '/.credentials/';
 var TOKEN_PATH = TOKEN_DIR + 'calendar-nodejs-quickstart.json';
+
+
+
+
+var raidLeaders;
+var raidFile = 'leaderlist.json'
+jsonfile.readFile(raidFile, function(err, obj) {
+  raidLeaders = obj;
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Load client secrets from a local file.
 
@@ -108,13 +132,38 @@ function addARDEvent(auth) {
 	for (j = 0; j < eventText.length; j++){
 	  calendar.events.quickAdd({
 		auth: auth,
-		calendarId: '5i97ee31755cdpednf3fc9b3u0@group.calendar.google.com',
+		calendarId: 'aredditdystopia@gmail.com',//'aredditdystopia@gmail.com',
+		colorId: 'green',
 		text: eventText[j]
   }, function(err, response) {
     if (err) {
       console.log('The API returned an error: ' + err);
       return;
     }
+	else if (response){
+		var summ = response.summary;
+		response.colorId = 0;
+		for (qu = 0; qu < raidLeaders.length; qu++){
+			if (summ.toLowerCase().includes(raidLeaders[qu])){
+				response.colorId = (qu+1);
+				console.log("Raid Leader: " + raidLeaders[qu]);
+			}
+		}
+		//console.log(response);
+			calendar.events.update({
+			  auth: auth,
+			  calendarId: 'aredditdystopia@gmail.com',
+			  eventId: response.id,
+			  resource: response
+			}, function(err, event) {
+			  if (err) {
+				console.log('There was an error contacting the Calendar service: ' + err);
+				return;
+			  }
+			  //console.log('Event update: %s', event.htmlLink);
+			});
+		
+	}
   });
   console.log ("New Event: " + eventText[j]);
 }
@@ -127,7 +176,42 @@ function addARDEvent(auth) {
 
 
 bot.on("message", msg => {
-    if (msg.channel.id == calId)  {
+	if (msg.content.startsWith("!") && msg.channel.recipient != undefined){
+		if (msg.content.startsWith("!add")){
+			var raidLeader = msg.content.substring(5);
+			raidLeaders.push(raidLeader.toLowerCase());
+			jsonfile.writeFileSync(raidFile, raidLeaders);
+			console.log("Added raid leader " + raidLeader);
+			msg.reply("Added raid leader " + raidLeader);
+		}
+		else if (msg.content.startsWith("!get")){
+			var tempRaidList = "Raid Leaders Saved: \n";
+			for (z = 0; z < raidLeaders.length; z++){
+				tempRaidList += (raidLeaders[z] + "\n");
+			}
+			msg.reply(tempRaidList);
+		}
+		else if (msg.content.startsWith("!help")){
+			var catal = "Commands: \n-------------- \n !add : adds a new raid leader *usage: !add* \n !get : retrieves list of raid leaders *usage: !get* \n !remove and !delete : removes a raid leader *usage: !remove RAIDLEADER* \n !help : Nice job!";
+			msg.reply(catal);
+		}
+		else if (msg.content.startsWith("!remove") || msg.content.startsWith("!delete")){
+			var raidLeader = msg.content.substring(8);
+			if (raidLeaders.indexOf(raidLeader.toLowerCase()) > -1){
+				raidLeaders.splice(raidLeaders.indexOf(raidLeader.toLowerCase()), 1);
+				jsonfile.writeFileSync(raidFile, raidLeaders);
+				msg.reply("Removed raid leader " + raidLeader);
+				console.log("Removed raid leader " + raidLeader);
+			}
+			else{
+				msg.reply("Raid Leader not found: " + raidLeader);
+			}
+		}
+		else{
+			msg.reply("Command not recognized- please use !help for commands")
+		}
+	}
+    else if (msg.channel.name == calChannel)  {
 	var numLines = msg.content.split("\n");
 	for (u = 0; u < numLines.length; u++){
 		var msgContent = numLines[u].split(" "); // turns content into array of words seperated by (and removing) spaces

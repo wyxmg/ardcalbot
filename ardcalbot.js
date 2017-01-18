@@ -1,6 +1,6 @@
 var Discord = require("discord.js");
 var bot = new Discord.Client();
-var versionNum = 1.1;
+var versionNum = 1.2;
 var eventText = [];
 var calChannel = "calendar";
 
@@ -152,7 +152,7 @@ function addARDEvent(auth) {
 		//console.log(response);
 			calendar.events.update({
 			  auth: auth,
-			  calendarId: 'aredditdystopia@gmail.com',
+			  calendarId: 'aredditdystopia@gmail.com',//areddit
 			  eventId: response.id,
 			  resource: response
 			}, function(err, event) {
@@ -167,7 +167,7 @@ function addARDEvent(auth) {
   });
   console.log ("New Event: " + eventText[j]);
 }
-  
+  eventText = [];
 }
 
 
@@ -211,51 +211,25 @@ bot.on("message", msg => {
 			msg.reply("Command not recognized- please use !help for commands")
 		}
 	}
-    else if (msg.channel.name == calChannel)  {
+    else if (msg.channel.name == calChannel) {
 	var numLines = msg.content.split("\n");
 	for (u = 0; u < numLines.length; u++){
 		var msgContent = numLines[u].split(" "); // turns content into array of words seperated by (and removing) spaces
-		var splitKeyDate = msgContent.indexOf("-");
+		var splitKeyDate = msgContent.indexOf("EST");
+		var eventTime = (msgContent[(splitKeyDate-1)]);
+		var eventDetails = "";
+		for (ii = (splitKeyDate+1); ii < msgContent.length; ii ++){
+			eventDetails += (" " + msgContent[ii]);
+		}
 		for (i = 0; i < splitKeyDate; i++){
-			if (msgContent[i] != "and"){
-				var eventTextDate;
-				var eventTextTime;
-				var eventTextDetails;
-				
-				eventTextDate = msgContent[i];
-				
-				var msgContentDetails = msgContent.slice();
-				msgContentDetails.splice(0, (splitKeyDate+1));
-				eventTextTime = ((msgContentDetails[0]) + " EST");
-				
-				var eventDetails = "";
-				console.log(msgContentDetails);
-				if (msgContentDetails.indexOf("-") < 0){
-					for (p = 2; p < (msgContentDetails.length); p++){
-					eventDetails += " ";
-					eventDetails += msgContentDetails[p];
-					}
-					eventLink = "N/A";
-					
-				}
-				else{
-					
-					
-				for (k = 2; k < (msgContentDetails.length - 2); k++){
-					eventDetails += " ";
-					eventDetails += msgContentDetails[k];
-				}
-					eventLink = msgContentDetails[msgContentDetails.length - 1];
-				}
-				eventTextDetails = (eventDetails + ". Link: " + eventLink);
-				
-				eventText.push(eventTextDetails + " on " + eventTextDate + " at " + eventTextTime + " for three hours");
-				
-
-				
+			if (msgContent[i].includes("/")) {
+				var eventDate = msgContent[i];
+				eventText.push(eventDate + " - " + eventTime + " EST " + eventDetails);
+				console.log(eventText);
 			}
 			
 		}
+		
 	}
 		fs.readFile('client_secret.json', function processClientSecrets(err, content) { // this is now outside of the loop because the callback was giving me a headache, and putting this in without it is like putting toombz on DPS- it just doesn't work
 				  if (err) {
@@ -276,4 +250,4 @@ bot.on('ready', () => {
   console.log('Ready! ARD Calendar Bot v' + versionNum);
 });
 
-bot.login("MjY3NDc4MjM1Nzg3Mjk2Nzc1.C1M2yA.p_Vr0ZtutWCm9sRtgu7ep5vzn9c");
+bot.login("MjY3NDc4MjM1Nzg3Mjk2Nzc1.C2F44A.o8rOHAJUTsWvt_pr9m2ZILHuWcE");
